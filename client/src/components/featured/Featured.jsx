@@ -1,7 +1,27 @@
 import {  InfoOutlined, PlayArrow } from '@material-ui/icons'
 import './featured.scss'
+import { useEffect, useState } from 'react'
+import axios from 'axios';
 
 const Featured = ({type}) => {
+    const [content,setContent] = useState({});
+
+    useEffect(()=>{
+        const getRandomContent = async ()=>{
+            try {
+                const res = await axios.get(`/movies/random?type=${type}`,{
+                    headers:{
+                        token:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YTgzMDIzMjMzYmZmMWNhZDc4ZmMzZiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY4ODgxMjUwMiwiZXhwIjoxNjg5MjQ0NTAyfQ.FoheRmXfEW7Zzw1MVijUgIGXL-GLHaRMl4HxU14mWaY"
+                      }
+                });
+                setContent(res.data[0]);
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        getRandomContent();
+    },[type]);
+
   return (
     <div className='featured'>
         {type && (
@@ -25,11 +45,11 @@ const Featured = ({type}) => {
                 </select>
             </div>
         )}
-        <img src="https://images.pexels.com/photos/264905/pexels-photo-264905.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" />
+        <img src={content.img} alt="" />
         <div className="info">
-            <img src="https://images.pexels.com/photos/264905/pexels-photo-264905.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" />
+            <img src={content.imgTitle} alt="" />
             <span className='desc'>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nemo corrupti minima, neque aut, mollitia impedit officiis voluptatem rerum sequi nobis eos. Ea, optio a.
+                {content.desc}
             </span>
             <div className="buttons">
                 <button className="play">

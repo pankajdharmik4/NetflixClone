@@ -39,7 +39,7 @@ router.get("/",verify,async (req,res)=>{
     let list = [];
 
     try {
-        if(type){
+        if(typeQuery){
             if(genreQuery){
                 list = await List.aggregate([
                     {$sample:{size:10}},
