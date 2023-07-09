@@ -10,7 +10,7 @@ router.post("/",verify,async (req,res)=>{
         try {
             const savedMovie = await newMovie.save();
             res.status(201).json(savedMovie);
-        } catch (error) {
+        } catch (err) {
             res.status(500).json(err)
         }
     }else{
@@ -28,7 +28,7 @@ router.put("/:id",verify,async (req,res)=>{
             },{new:true});
     
             res.status(200).json(updatedMovie);
-        } catch (error) {
+        } catch (err) {
             res.status(500).json(err)
         }
     }else{
@@ -44,7 +44,7 @@ router.delete("/:id",verify,async (req,res)=>{
             await Movie.findByIdAndDelete(req.params.id);
     
             res.status(200).json("The movie has been deleted...");
-        } catch (error) {
+        } catch (err) {
             res.status(500).json(err)
         }
     }else{
@@ -58,7 +58,7 @@ router.get("/find/:id",verify,async (req,res)=>{
         const movie = await Movie.findById(req.params.id);
         res.status(200).json(movie);
 
-    } catch (error) {
+    } catch (err) {
         res.status(500).json(err)
     }
 })
@@ -82,7 +82,7 @@ router.get("/random",verify,async (req,res)=>{
         }
         res.status(200).json(movie);
 
-    } catch (error) {
+    } catch (err) {
         res.status(500).json(err)
     }
 })
@@ -95,7 +95,7 @@ router.get("/",verify,async (req,res)=>{
             const movies = await Movie.find();
     
             res.status(200).json(movies.reverse());
-        } catch (error) {
+        } catch (err) {
             res.status(500).json(err)
         }
     }else{
