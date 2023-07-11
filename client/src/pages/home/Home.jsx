@@ -7,7 +7,7 @@ import axios from 'axios'
 
 const Home = ({type}) => {
   const [lists, setLists] = useState([]);
-  const [genre,setGenre] = useState(null);
+  const [genre,setGenre] = useState("");
 
 
   useEffect(()=>{
@@ -30,10 +30,11 @@ const Home = ({type}) => {
   return (
     <div className='home'>
         <Navbar/>
-        <Freatured type={type}/>
+        <Freatured type={type} setGenre={setGenre}/>
         {lists.map((list)=>(
           <List list={list} />
         ))}
+        <br/>
     </div>
   )
 }

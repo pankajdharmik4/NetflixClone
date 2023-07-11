@@ -1,20 +1,35 @@
 import { useRef,useState } from 'react'
 import './register.scss'
+import {useNavigate,Link} from "react-router-dom";
+import axios from "axios"
+
 
 export default function Register() {
 
     const [email, setEmail] = useState("")
     const [password,setPassword] = useState("")
+    const [username,setUsername] = useState("")
 
     const emailRef = useRef()
     const passwordRef = useRef()
+    const usernameRef = useRef()
+    const navigate = useNavigate();
 
     const handleStart = ()=>{
         setEmail(emailRef.current.value)
+        emailRef.current.value = ""
     }
 
-    const handleFinish = ()=>{
+    const handleFinish = async (e)=>{
+      e.preventDefault()
         setPassword(passwordRef.current.value)
+        setUsername(usernameRef.current.value)
+        try {
+          await axios.post("auth/register",{email,username,password})
+          navigate("/login")
+        } catch (err) {
+          console.log(err)
+        }
     }
   return (
     <div className='register'>
@@ -24,7 +39,10 @@ export default function Register() {
                 <img
                 className='logo'
                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/799px-Netflix_2015_logo.svg.png?20190206123158" alt="" />
-                <button className='loginButton'>Sign In</button>
+                 
+                <Link to="/login">
+                  <button className='loginButton' >Sign In</button>
+                </Link>
             </div>
 
         </div>
@@ -43,10 +61,11 @@ export default function Register() {
         </div>
         ):(
             <div className="input">
-            <input type="password" placeholder="password" ref={passwordRef}/>
-            <button className="registerButton" onClick={handleFinish}>
-              Start
-            </button>
+              <input type="username" placeholder='username' ref={usernameRef} />
+              <input type="password" placeholder="password" ref={passwordRef}/>
+              <button className="registerButton" onClick={handleFinish}>
+                Start
+              </button>
         </div>
         )}
         

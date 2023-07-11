@@ -2,14 +2,16 @@ import {  InfoOutlined, PlayArrow } from '@material-ui/icons'
 import './featured.scss'
 import { useEffect, useState } from 'react'
 import axios from 'axios';
+import {Link} from "react-router-dom"
 
-const Featured = ({type}) => {
+const Featured = ({type, setGenre}) => {
     const [content,setContent] = useState({});
+    const [genre1,setGenre1] = useState("");
 
     useEffect(()=>{
         const getRandomContent = async ()=>{
             try {
-                const res = await axios.get(`/movies/random?type=${type}`,{
+                const res = await axios.get(`/movies/random?type=${type}${genre1? "&genre="+ genre1  :""}`,{
                     headers:{
                         token:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YTgzMDIzMjMzYmZmMWNhZDc4ZmMzZiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY4ODgxMjUwMiwiZXhwIjoxNjg5MjQ0NTAyfQ.FoheRmXfEW7Zzw1MVijUgIGXL-GLHaRMl4HxU14mWaY"
                       }
@@ -20,39 +22,41 @@ const Featured = ({type}) => {
             }
         }
         getRandomContent();
-    },[type]);
+    },[type,genre1]);
 
   return (
     <div className='featured'>
         {type && (
             <div className="category">
                 <span>{type === "movie" ? "Movies":"Series"}</span>
-                <select name="genre" id="genre">
+                <select name="genre" id="genre" onChange={e=>{setGenre(e.target.value);setGenre1(e.target.value)}}>
                     <option>Genre</option>
                     <option value="adventure">Adventure</option>
-                    <option value="comedy">Comedy</option>
-                    <option value="crime">Crime</option>
-                    <option value="fantasy">Fantasy</option>
-                    <option value="historical">Historical</option>
-                    <option value="horror">Horror</option>
-                    <option value="romance">Romance</option>
+                    {/* <option value="comedy">Comedy</option> */}
+                    {/* <option value="crime">Crime</option> */}
+                    <option value="action">Action</option>
+                    {/* <option value="fantasy">Fantasy</option> */}
+                    {/* <option value="historical">Historical</option> */}
+                    {/* <option value="horror">Horror</option> */}
+                    {/* <option value="romance">Romance</option> */}
                     <option value="sci-fi">Sci-fi</option>
-                    <option value="thriller">Thriller</option>
-                    <option value="western">Western</option>
+                    {/* <option value="thriller">Thriller</option> */}
+                    {/* <option value="western">Western</option> */}
                     <option value="animation">Animation</option>
-                    <option value="drama">Drama</option>
-                    <option value="documentary">Documentary</option>
+                    {/* <option value="drama">Drama</option> */}
+                    {/* <option value="documentary">Documentary</option> */}
                 </select>
             </div>
         )}
         <img src={content.img} alt="" />
         <div className="info">
-            <img src={content.imgTitle} alt="" />
+            {content.imgTitle && <img src={content.imgTitle} alt="" />}
             <span className='desc'>
                 {content.desc}
             </span>
+            <Link to="/watch" state={{movie:content}} className='link'>
             <div className="buttons">
-                <button className="play">
+            <button className="play">
                     <PlayArrow/>
                     <span>Play</span>
                 </button>
@@ -61,6 +65,7 @@ const Featured = ({type}) => {
                     <span>Info</span>
                 </button>
             </div>
+            </Link>
         </div>
     </div>
   )
