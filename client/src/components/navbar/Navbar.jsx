@@ -23,11 +23,11 @@ const Navbar = () => {
             <Link className='link' to="/">
                 <span>Homepage</span>
             </Link>
-            <Link className='link' to="/series">
-                <span>Series</span>
-            </Link>
             <Link className='link' to="/movies">
                 <span>Movies</span>
+            </Link>
+            <Link className='link' to="/series">
+                <span>Series</span>
             </Link>
             </div>
             <div className="right">
