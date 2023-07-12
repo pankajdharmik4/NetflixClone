@@ -6,6 +6,7 @@ const authRoute = require("./routes/auth");
 const userRoute = require("./routes/users");
 const movieRoute = require("./routes/movies")
 const listRoute = require("./routes/lists");
+const cors = require("cors");
 
 
 dotenv.config();
@@ -20,7 +21,7 @@ async function main() {
   }).catch(err=>console.log(err));
   // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
 }
-
+app.use(cors());
 app.use(express.json());
 app.use('/api/auth',authRoute);
 app.use('/api/users',userRoute);
