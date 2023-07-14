@@ -15,7 +15,7 @@ const Home = ({type}) => {
       try {
         const res = await axios.get(`https://netflix-clone-6b3c.onrender.com/api/lists${type?"?type=" + type:""}${genre? "&genre="+ genre  :""}`,{
           headers:{
-            token:"Bearer "+JSON.parse(localStorage.getItem("user")).accessToken
+            token:"Bearer " + JSON.parse(localStorage.getItem("user")).accessToken
           }
         });
         setLists(res.data);
