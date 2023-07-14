@@ -13,7 +13,7 @@ const Featured = ({type, setGenre}) => {
             try {
                 const res = await axios.get(`https://netflix-clone-6b3c.onrender.com/api/movies/random?type=${type}${genre1? "&genre="+ genre1  :""}`,{
                     headers:{
-                        token:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YTgzMDIzMjMzYmZmMWNhZDc4ZmMzZiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY4ODgxMjUwMiwiZXhwIjoxNjg5MjQ0NTAyfQ.FoheRmXfEW7Zzw1MVijUgIGXL-GLHaRMl4HxU14mWaY"
+                        token:"Bearer " + JSON.parse(localStorage.getItem("user")).accessToken
                       }
                 });
                 setContent(res.data[0]);
